@@ -69,3 +69,36 @@ To build the server, execute:
 ```sh
 g++ ./src/logger.cpp ./src/server.cpp ./src/run_server.cpp -o ./bin/server
 ```
+
+## Example Usage
+
+1. Start the server on port 3000:
+
+```sh
+./bin/server 8080
+```
+
+2. Start several clients with different names and intervals:
+
+```sh
+./bin/client Name1 8080 1
+./bin/client Name2 8080 2
+./bin/client Name3 8080 3
+```
+
+3. Log `log.txt` example:
+
+```
+[2024-10-15 17:31:50.257] "Name1"
+[2024-10-15 17:31:51.257] "Name1"
+[2024-10-15 17:31:51.399] "Name2"
+[2024-10-15 17:31:52.258] "Name1"
+[2024-10-15 17:31:52.491] "Name3"
+[2024-10-15 17:31:53.258] "Name1"
+[2024-10-15 17:31:53.399] "Name2"
+[2024-10-15 17:31:54.258] "Name1"
+[2024-10-15 17:31:55.259] "Name1"
+[2024-10-15 17:31:55.399] "Name2"
+[2024-10-15 17:31:56.259] "Name1"
+[2024-10-15 17:31:57.259] "Name1"
+```
