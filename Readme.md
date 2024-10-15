@@ -17,7 +17,6 @@ This project includes the implementation of a console-based TCP client and serve
 - **Server**: 
   - Listens on a specified port and accepts messages from clients.
   - Logs each message to a file named `log.txt`, ensuring correct access to the file when working with multiple clients.
-  - Handles each client connection in a separate thread, allowing simultaneous operation with multiple clients.
 
 ## Running
 
