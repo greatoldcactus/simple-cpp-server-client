@@ -18,6 +18,9 @@
         Client(const std::string& name, int port, int timeout);
         ~Client();
 
+        Client(const Client&) = delete;
+        Client& operator=(const Client&) = delete;
+
         void Send() const;
         void Run() const;
         void Connect(const std::string& ip);

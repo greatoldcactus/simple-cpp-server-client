@@ -25,6 +25,8 @@ namespace server {
 
         Server(int port);
         Server(int port, const std::string& filename);
+        Server(const Server&) = delete;
+        Server& operator=(const Server&) = delete;
         ~Server();
 
         void ListenAndServe();
