@@ -6,8 +6,6 @@
 
     namespace client {
 
-    constexpr int BUFFER_SIZE = 1024;
-
     class Client {
         std::string name;
         int port;

@@ -45,8 +45,6 @@ namespace client {
             throw std::runtime_error("not connected");
         }
 
-        char buffer[BUFFER_SIZE] = {0};
-
         std::ostringstream oss;
         oss << "[" << getCurrentTime() << "]" << " \"" << name<<"\"";
 
