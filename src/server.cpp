@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <thread>
 #include <memory>
+#include <vector>
 
 #include <unistd.h>
 #include <sys/types.h>
@@ -87,26 +88,35 @@ namespace server {
     }
 
     void Server::ServeSocket(int socket){
-        while(true) {
-            char buffer[BUFFER_SIZE] = {0};
+        uint32_t length;
+        while(recv(socket, &length, sizeof(length), 0) > 0) {
+            length = ntohl(length);
 
-            // Read data from the client
-            int valread = read(socket, buffer, BUFFER_SIZE);
-            if (valread == 0) {
-                std::cout<<"Client disconnected"<<std::endl;
-                return;
-            }
-            if (valread < 0) {
-                std::cerr << "Error when reading from socket" << std::endl;
+            if (length > 256'000'000) {
+                std::cout<<"Message too big: "<<length<<std::endl;
                 return;
             }
 
-            std::string message = buffer;
+            std::vector<char> buffer(length + 1);
+
+            ssize_t totalBytesRead = 0;
+            while (totalBytesRead < length) {
+            ssize_t bytesRead = recv(socket, buffer.data() + totalBytesRead, length - totalBytesRead, 0);
+            if (bytesRead <= 0) {
+                std::cout << "Client disconnected" << std::endl;
+                return;
+            }
+            totalBytesRead += bytesRead;
+        }
+
+            buffer[length] = '\0';
+
+            std::string message(buffer.data());
 
             logger->Write(message);
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
         }
+
+        std::cout<<"Client disconnected"<<std::endl;
     
     }
 

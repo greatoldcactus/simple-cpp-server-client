@@ -50,6 +50,12 @@ namespace client {
 
         std::string message = oss.str();
 
+        uint32_t length = htonl(message.size());
+        if (send(sock, &length, sizeof(length), 0) < 0) {
+            std::cerr << "send failed" << std::endl;
+            return;
+        }
+
         // Send message to server
         if (send(sock, message.c_str(), message.size(), 0) < 0) {
             std::cerr << "send failed" << std::endl;
